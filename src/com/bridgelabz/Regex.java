@@ -19,6 +19,10 @@ public class Regex {
         System.out.println("Enter email: ");
         String email=scanner.next();
         regex.validateEmail(email);
+
+        System.out.println("Enter mobile no as per format: (e.g. 91 9867859848) ");
+        String mobileNo=scanner.nextLine();
+        regex.validateMobileNo(mobileNo);
     }
 
     public void validateName(String name){
@@ -35,11 +39,21 @@ public class Regex {
         Email has 3 mandatory parts (abc, bl & co) and 2 optional (xyz & in)
         with precise @ and . positions
  */
-        Pattern pattern=Pattern.compile("^[a-zA-Z0-9]+ ([._-][a-zA-Z0-9]+)* @ [a-z]+ ([.][a-z])* ([.][a-z]+)$");
+        Pattern pattern=Pattern.compile("^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)*@([a-z]+)([.][a-z])*(\\.[a-z]+)$");
         boolean matches = pattern.matcher(email).matches();
         if (matches){
             System.out.println("email is valid");
         }else
             System.out.println("email is not valid");
+    }
+
+    public void validateMobileNo(String mobileNo){
+        Pattern pattern=Pattern.compile("^[\\d]{2}\\s[\\d]{10}$");
+        boolean isValid = pattern.matcher(mobileNo).matches();
+        if (isValid){
+            System.out.println("mobile is valid");
+        }else {
+            System.out.println("mobile is not valid");
+        }
     }
 }
