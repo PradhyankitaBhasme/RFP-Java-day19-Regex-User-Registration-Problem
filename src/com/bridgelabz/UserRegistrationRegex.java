@@ -17,12 +17,12 @@ public class UserRegistrationRegex {
         Email has 3 mandatory parts (abc, bl & co) and 2 optional (xyz & in)
         with precise @ and . positions
  */
-        Pattern pattern=Pattern.compile("^[a-zA-Z0-9]+([._-][a-zA-Z0-9]+)*@([a-z]+)([.][a-z])*(\\.[a-z]+)$");
+        Pattern pattern=Pattern.compile("^[a-zA-Z0-9]+([._-[+]][a-zA-Z0-9]+)*@([a-z1-9]+)([.][a-z]*)?(\\.[a-z]{2,})$");
         boolean isValid = pattern.matcher(email).matches();
         if (isValid){
-            System.out.println("email is valid");
+            System.out.println("email is valid => "+email);
         }else
-            System.out.println("email is not valid");
+            System.out.println("email is not valid => "+email);
     }
 
     public void validateMobileNo(String mobileNo){
@@ -36,24 +36,34 @@ public class UserRegistrationRegex {
     }
 
     public void validatePassword(String password){
-        boolean isValid=true;
-        validatePassRule1(password);
-        validatePassRule2(password);
-        validatePassRule3(password);
-        validatePassRule4(password);
+        boolean isValid=validatePassRule1(password);
+        if (isValid){
+            isValid=validatePassRule2(password);
+            if (isValid){
+                isValid=validatePassRule3(password);
+                if (isValid){
+                    isValid=validatePassRule4(password);
+                    if (isValid){
+                        System.out.println("Password is valid");
+                    }
+                }
+            }
+        }
+
     }
-    void validatePassRule1(String password){
+    boolean validatePassRule1(String password){
         //minimum 8 characters
         Pattern pattern=Pattern.compile("[\\S]{8,}");
         Boolean isValid=pattern.matcher(password).matches();
         if (isValid){
             System.out.println("Rule1 Pass...");
         }else {
-            System.out.println("Invalid Password! =>Password must have minimum 8 characters");
+            System.out.println("Invalid Password! => Password must have minimum 8 characters");
         }
+        return isValid;
     }
 
-    void validatePassRule2(String password){
+    boolean validatePassRule2(String password){
         //At least one upperCase letter
         Pattern pattern=Pattern.compile("(?=.*[A-Z])[\\S]{8,}");
         Boolean isValid=pattern.matcher(password).matches();
@@ -62,8 +72,9 @@ public class UserRegistrationRegex {
         }else {
             System.out.println("Invalid Password! => password must have at least one uppercase letter");
         }
+        return isValid;
     }
-    void validatePassRule3(String password){
+    boolean validatePassRule3(String password){
         //aAt least one upperCase letter
         Pattern pattern=Pattern.compile("(?=.*[A-Z])(?=.*[0-9])[\\S]{8,}");
         Boolean isValid=pattern.matcher(password).matches();
@@ -72,9 +83,10 @@ public class UserRegistrationRegex {
         }else {
             System.out.println("Invalid Password! => password must have at least numeric letter");
         }
+        return isValid;
     }
 
-    void validatePassRule4(String password){
+    boolean validatePassRule4(String password){
         //aAt least one upperCase letter
         Pattern pattern=Pattern.compile("(?=.*[A-Z])(?=.*[^\\w\\d\\s:])(?=.*[0-9])[\\S]{8,}");
         Boolean isValid=pattern.matcher(password).matches();
@@ -83,5 +95,6 @@ public class UserRegistrationRegex {
         }else {
             System.out.println("Invalid Password! => password must have one special character");
         }
+        return isValid;
     }
 }
