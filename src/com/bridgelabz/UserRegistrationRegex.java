@@ -38,15 +38,28 @@ public class UserRegistrationRegex {
     public void validatePassword(String password){
         boolean isValid=true;
         validatePassRule1(password);
+        validatePassRule2(password);
     }
     boolean validatePassRule1(String password){
         //minimum 8 characters
-        Pattern pattern=Pattern.compile("[\\w]{8,}");
+        Pattern pattern=Pattern.compile("[\\S]{8,}");
         Boolean isValid=pattern.matcher(password).matches();
         if (isValid){
             System.out.println("Rule1 Pass...");
         }else {
             System.out.println("Invalid Password! \nPassword must have minimum 8 characters");
+        }
+        return isValid;
+    }
+
+    boolean validatePassRule2(String password){
+        //aAt least one upperCase letter
+        Pattern pattern=Pattern.compile("(?=.*[A-Z])[\\S]{8,}");
+        Boolean isValid=pattern.matcher(password).matches();
+        if (isValid){
+            System.out.println("Rule2 Pass...");
+        }else {
+            System.out.println("Invalid Password! \npassword must have at least one uppercase letter");
         }
         return isValid;
     }
