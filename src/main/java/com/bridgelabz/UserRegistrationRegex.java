@@ -3,16 +3,25 @@ package com.bridgelabz;
 import java.util.regex.Pattern;
 
 public class UserRegistrationRegex {
-    public void validateName(String name){
+    public boolean validateFirstName(String name){
 //        firstName or lastName starts with Cap and has minimum 3 characters
         Pattern pattern=Pattern.compile("^[A-Z][a-zA-Z]{2,}");
         boolean isValid = pattern.matcher(name).matches();
         if (isValid){
             System.out.println(name+" is valid");
-        }else
+        }else{
             System.out.println(name+" is not valid");
+        }
+        return isValid;
     }
-    public void validateEmail(String email){
+
+    public boolean validateLastName(String name){
+//        Validation for firstName or lastName is same
+        boolean isValid = validateFirstName(name);
+        return isValid;
+    }
+
+    public boolean validateEmail(String email){
 /*        E.g. abc.xyz@bl.co.in
         Email has 3 mandatory parts (abc, bl & co) and 2 optional (xyz & in)
         with precise @ and . positions
@@ -23,9 +32,10 @@ public class UserRegistrationRegex {
             System.out.println("email is valid => "+email);
         }else
             System.out.println("email is not valid => "+email);
+        return isValid;
     }
 
-    public void validateMobileNo(String mobileNo){
+    public boolean validateMobileNo(String mobileNo){
         Pattern pattern=Pattern.compile("^[\\d]{2}\\s[\\d]{10}$");
         boolean isValid = pattern.matcher(mobileNo).matches();
         if (isValid){
@@ -33,9 +43,10 @@ public class UserRegistrationRegex {
         }else {
             System.out.println("mobile is not valid");
         }
+        return isValid;
     }
 
-    public void validatePassword(String password){
+    public boolean validatePassword(String password){
         boolean isValid=validatePassRule1(password);
         if (isValid){
             isValid=validatePassRule2(password);
@@ -45,10 +56,12 @@ public class UserRegistrationRegex {
                     isValid=validatePassRule4(password);
                     if (isValid){
                         System.out.println("Password is valid");
+                        return true;
                     }
                 }
             }
         }
+        return false;
 
     }
     boolean validatePassRule1(String password){

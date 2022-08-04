@@ -9,11 +9,11 @@ public class UserRegistrationMain {
 
         System.out.println("Enter first name: ");
         String firstName=scanner.next();
-        regex.validateName(firstName);
+        regex.validateFirstName(firstName);
 
         System.out.println("\nEnter last name: ");
         String lastName=scanner.next();
-        regex.validateName(lastName);
+        regex.validateLastName(lastName);
 
         System.out.println("\nEnter email: ");
         String email=scanner.next();
