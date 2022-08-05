@@ -1,5 +1,6 @@
 package com.junit;
 
+import com.bridgelabz.InvalidUserDetailsException;
 import com.bridgelabz.UserRegistrationRegex;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,80 +10,76 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class UserRegistrationTest {
     static UserRegistrationRegex userRegistration;
+
     @BeforeAll
-    public static void initialize(){
-        userRegistration =new UserRegistrationRegex();
+    public static void initialize() {
+        userRegistration = new UserRegistrationRegex();
     }
 
     @Test
-    public void givenFirstName_WhenValid_ShouldReturnsTrue(){
-        boolean result= userRegistration.validateFirstName("Abc");
+    public void givenFirstName_WhenValid_ShouldReturnsTrue() throws InvalidUserDetailsException {
+        boolean result = userRegistration.validateFirstName("Abc");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenFirstName_WhenInValid_ShouldReturnsFalse(){
-        boolean result= userRegistration.validateFirstName("ab");
-        Assertions.assertFalse(result);
+    public void givenFirstName_WhenInValid_ShouldThrowInvalidUserDetailsException() {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validateFirstName("ab"));
     }
 
     @Test
-    public void givenLastName_WhenValid_ShouldReturnTrue(){
-        boolean result= userRegistration.validateLastName("Xyz");
+    public void givenLastName_WhenValid_ShouldReturnTrue() throws InvalidUserDetailsException {
+        boolean result = userRegistration.validateLastName("Xyz");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenLastName_WhenInValid_ShouldReturnFalse(){
-        boolean result= userRegistration.validateLastName("xy");
-        Assertions.assertFalse(result);
+    public void givenLastName_WhenInValid_ShouldThrowInvalidUserDetailsException() {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validateLastName("xy"));
     }
 
     @Test
-    public void givenEmail_WhenValid_ShouldReturnTrue(){
-        boolean result=userRegistration.validateEmail("Abc.def@xyz.co.in");
+    public void givenEmail_WhenValid_ShouldReturnTrue() throws InvalidUserDetailsException {
+        boolean result = userRegistration.validateEmail("Abc.def@xyz.co.in");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenEmail_WhenInValid_ShouldReturnFalse(){
-        boolean result=userRegistration.validateEmail("Abc.co.in");
-        Assertions.assertFalse(result);
+    public void givenEmail_WhenInValid_ShouldThrowInvalidUserDetailsException() {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validateEmail("Abc.co.in"));
     }
 
     @Test
-    public void givenMobileNumber_WhenValid_ShouldReturnTrue(){
-        boolean result=userRegistration.validateMobileNo("91 9874561230");
+    public void givenMobileNumber_WhenValid_ShouldReturnTrue() throws InvalidUserDetailsException {
+        boolean result = userRegistration.validateMobileNo("91 9874561230");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenMobileNumber_WhenInValid_ShouldReturnFalse(){
-        boolean result=userRegistration.validateMobileNo("965874526");
-        Assertions.assertFalse(result);
+    public void givenMobileNumber_WhenInValid_ShouldThrowInvalidUserDetailsException() {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validateMobileNo("965874526"));
     }
 
     @Test
-    public void givenPassword_WhenValid_ShouldReturnTrue(){
-        boolean result=userRegistration.validatePassword("A54tbh15@");
+    public void givenPassword_WhenValid_ShouldReturnTrue() throws InvalidUserDetailsException {
+        boolean result = userRegistration.validatePassword("A54tbh15@");
         Assertions.assertTrue(result);
     }
 
     @Test
-    public void givenPassword_WhenInValid_ShouldReturnFalse(){
-        boolean result=userRegistration.validatePassword("96526d");
-        Assertions.assertFalse(result);
+    public void givenPassword_WhenInValid_ShouldThrowInvalidUserDetailsException() {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validatePassword("96526d"));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"abc@yahoo.com","abc-100@yahoo.com","abc.100@yahoo.com","abc111@abc.com","abc-100@abc.net","abc.100@abc.com.au","abc@1.com","abc@gmail.com.com","abc+100@gmail.com"})
-    public void givenEmail_WhenValid_ShouldReturnTrue(String email) {
+    @ValueSource(strings = {"abc@yahoo.com", "abc-100@yahoo.com", "abc.100@yahoo.com", "abc111@abc.com", "abc-100@abc.net", "abc.100@abc.com.au", "abc@1.com", "abc@gmail.com.com", "abc+100@gmail.com"})
+    public void givenEmail_WhenValid_ShouldReturnTrue(String email) throws InvalidUserDetailsException {
         Assertions.assertTrue(userRegistration.validateEmail(email));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"abc","abc@.com.my","abc123@gmail.a","abc123@.com","abc123@.com.com","abc()*@gmail.com","abc@%*.com","abc..2002@gmail.com","abc.@gmail.com","abc@abc@gmail.com","abc@gmail.com.1a","abc@gmail.com.aa.au"})
-    public void givenEmail_WhenInValid_ShouldReturnFalse(String email) {
-        Assertions.assertFalse(userRegistration.validateEmail(email));
+    @ValueSource(strings = {"abc", "abc@.com.my", "abc123@gmail.a", "abc123@.com", "abc123@.com.com", "abc()*@gmail.com", "abc@%*.com", "abc..2002@gmail.com", "abc.@gmail.com", "abc@abc@gmail.com", "abc@gmail.com.1a", "abc@gmail.com.aa.au"})
+    public void givenEmail_WhenInValid_ShouldThrowInvalidUserDetailsException(String email) {
+        Assertions.assertThrows(InvalidUserDetailsException.class, () -> userRegistration.validateEmail(email));
     }
 }
