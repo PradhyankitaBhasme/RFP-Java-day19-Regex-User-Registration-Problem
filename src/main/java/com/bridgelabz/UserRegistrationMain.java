@@ -8,22 +8,22 @@ public class UserRegistrationMain {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter first name: ");
-        regex.validateFirstName(scanner.next());
+        regex.name.validate(scanner.next());
 
         System.out.println("\nEnter last name: ");
-        regex.validateLastName(scanner.next());
+        regex.name.validate(scanner.next());
 
         System.out.println("\nEnter email: ");
-        regex.validateEmail(scanner.next());
+        regex.email.validate(scanner.next());
 
         System.out.println("\nEnter mobile no as per format: (e.g. 91 9867859848) ");
         scanner.nextLine();
-        regex.validateMobileNo(scanner.nextLine());
+        regex.mobileNo.validate(scanner.nextLine());
 
         System.out.println("\nEnter Password:");
-        regex.validatePassword(scanner.next());
+        regex.password.validate(scanner.next());
 
         System.out.println("\nValid Emails: ");
-        regex.validateEmail(scanner.next());
+        regex.email.validate(scanner.next());
     }
 }
